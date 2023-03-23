@@ -16,6 +16,8 @@ public:
     image(SDL_Renderer *renderer, const char *path);
     ~image();
     void draw();
+    void setSize(int w, int h);
+    void setLocation(int x, int y);
 };
 
 #endif

@@ -8,7 +8,7 @@ int main(){
 
     SDL_Event event;
 
-    graphics ctx(1000, 950);
+    graphics ctx;
 
     int running = true;
     while(running) {

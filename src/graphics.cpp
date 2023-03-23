@@ -2,17 +2,23 @@
 #include <iostream>
 #include "graphics.h"
 
-graphics::graphics(int SCREEN_WIDTH, int SCREEN_HEIGHT): SCREEN_WIDTH(SCREEN_WIDTH), SCREEN_HEIGHT(SCREEN_HEIGHT) {
+constexpr int SCREEN_WIDTH = 1000;
+constexpr int BOARD_HEIGHT = 600;
+constexpr int UI_HEIGHT = 200;
+
+graphics::graphics() {
     SDL_Init(SDL_INIT_VIDEO);
 
     if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 		std::cout << "Unable to init SDL_image: " << IMG_GetError() << std::endl;
 	}
     
-    SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
+    SDL_CreateWindowAndRenderer(SCREEN_WIDTH, BOARD_HEIGHT + UI_HEIGHT, 0, &window, &renderer);
     SDL_SetWindowTitle(window, "Risk");
 
-    this->boardImg = new image(renderer, "/home/david10238/Desktop/riskImages/board.png");
+    boardImg = new image(renderer, "/home/david10238/Desktop/riskImages/board.png");
+    boardImg->setLocation(0, 0);
+    boardImg->setSize(SCREEN_WIDTH, BOARD_HEIGHT);
 }
 
 graphics::~graphics(){

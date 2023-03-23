@@ -13,6 +13,16 @@ image::image(SDL_Renderer *renderer, const char *path) {
     this->rect.h = h;
 }
 
+void image::setLocation(int x, int y){
+    this->rect.x = x;
+    this->rect.y = y;
+}
+
+void image::setSize(int w, int h){
+    this->rect.w = w;
+    this->rect.h = h;
+}
+
 image::~image(){
     SDL_DestroyTexture(img);
 }

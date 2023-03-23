@@ -11,12 +11,9 @@ class graphics {
 private:
     SDL_Renderer *renderer;
     SDL_Window *window;
-    const int SCREEN_WIDTH;
-    const int SCREEN_HEIGHT;
     image *boardImg;
 public:
-    graphics(int SCREEN_WIDTH, int SCREEN_HEIGHT);
-    graphics() = delete;
+    graphics();
     ~graphics();
     void drawBackground();
     void clear();
