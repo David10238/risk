@@ -7,10 +7,8 @@ int main(){
     std::cout << "Luanching" << std::endl;
 
     SDL_Event event;
-    SDL_Renderer *renderer;
-    SDL_Window *window;
 
-    graphics ctx(renderer, window, 1000, 500);
+    graphics ctx(1000, 950);
 
     int running = true;
     while(running) {
@@ -25,10 +23,6 @@ int main(){
         ctx.render();
         SDL_Delay(5);
     }
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
 
     return EXIT_SUCCESS;
 }

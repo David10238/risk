@@ -1,8 +1,13 @@
 
+#include <iostream>
 #include "graphics.h"
 
-graphics::graphics(SDL_Renderer *renderer, SDL_Window *window, int SCREEN_WIDTH, int SCREEN_HEIGHT) : renderer(renderer), SCREEN_WIDTH(SCREEN_WIDTH), SCREEN_HEIGHT(SCREEN_HEIGHT) {
+graphics::graphics(int SCREEN_WIDTH, int SCREEN_HEIGHT): SCREEN_WIDTH(SCREEN_WIDTH), SCREEN_HEIGHT(SCREEN_HEIGHT) {
     SDL_Init(SDL_INIT_VIDEO);
+
+    if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
+		std::cout << "Unable to init SDL_image: " << IMG_GetError() << std::endl;
+	}
     
     SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
     SDL_SetWindowTitle(window, "Risk");
@@ -11,6 +16,12 @@ graphics::graphics(SDL_Renderer *renderer, SDL_Window *window, int SCREEN_WIDTH,
 }
 
 graphics::~graphics(){
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+
+    IMG_Quit();
+    SDL_Quit();
+    
     delete boardImg;
 }
 
