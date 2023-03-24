@@ -20,6 +20,9 @@ public:
     void drawTerritory(territory t);
     void clear();
     void render();
+    void fillRect(SDL_Rect *rect, int r, int g, int b, int a);
+    const int getHeight() const;
+    const int getWidth() const;
 };
 
 #endif

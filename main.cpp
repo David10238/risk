@@ -2,11 +2,44 @@
 #include <SDL2/SDL.h>
 #include "src/graphics.h"
 #include "src/board.h"
+#include "src/collider.h"
 
 board game_board = board();
+graphics ctx;
+bool gameStarted = false;
+
+std::array<SDL_Rect, 6> createPlayerBoxes(){
+    constexpr int BUTTON_WIDTH = 600;
+    constexpr int BUFFER = 20;
+    
+    const int SCREEN_HEIGHT = ctx.getHeight();
+    const int SCREEN_WIDTH = ctx.getWidth();
+
+    const int BUTTON_HEIGHT = (SCREEN_HEIGHT - BUFFER * 7) / 6;;
+
+    std::array<SDL_Rect, 6> arr;
+    for(int i = 0; i < arr.size(); i++){
+        arr[i].h = BUTTON_HEIGHT;
+        arr[i].w = BUTTON_WIDTH;
+        arr[i].x = (SCREEN_WIDTH / 2) - (BUTTON_WIDTH / 2);
+        arr[i].y = (BUFFER) + (BUFFER + BUTTON_HEIGHT)*i;
+    }
+    return arr;
+}
+const std::array<SDL_Rect, 6> playercounts_boxes = createPlayerBoxes();
 
 void handleClick(int x, int y){
     std::cout << "x: " << x << " y: " << y << std::endl;
+    if(!gameStarted){
+        for(int i = 0; i < playercounts_boxes.size(); i++){
+            if(collider::check(playercounts_boxes[i], x, y)){
+                gameStarted = true;
+                std::cout << "Selected " << i+1 << " players" << std::endl;
+            }
+        }
+        return;
+    }
+
     for(territory t : game_board.territories){
         int dx = x-t.x;
         int dy = y-t.y;
@@ -20,12 +53,24 @@ void handleClick(int x, int y){
     std::cout << std::endl;
 }
 
+void renderGame(){
+    ctx.drawBackground();
+    for(territory t : game_board.territories){
+        ctx.drawTerritory(t);
+    }
+}
+
+void renderMenu(){
+    for(SDL_Rect box : playercounts_boxes){
+        ctx.fillRect(&box, 255, 255, 255, 255);
+    }
+}
+
+
 int main(){ 
     std::cout << "Luanching" << std::endl;
 
     SDL_Event event;
-
-    graphics ctx;
 
     int running = true;
     bool mouseDown = false;
@@ -46,11 +91,14 @@ int main(){
             }
         }
     
+
         ctx.clear();
         
-        ctx.drawBackground();
-        for(territory t : game_board.territories){
-            ctx.drawTerritory(t);
+        if(gameStarted){
+            renderGame();
+        }
+        else{
+            renderMenu();
         }
         
         ctx.render();

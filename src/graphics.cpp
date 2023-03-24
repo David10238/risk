@@ -1,10 +1,12 @@
 
 #include <iostream>
+#include <array>
 #include "graphics.h"
 
 constexpr int SCREEN_WIDTH = 1200;
 constexpr int BOARD_HEIGHT = 650;
 constexpr int UI_HEIGHT = 250;
+constexpr int SCREEN_HEIGHT = BOARD_HEIGHT + UI_HEIGHT;
 
 graphics::graphics() {
     SDL_Init(SDL_INIT_VIDEO);
@@ -13,7 +15,7 @@ graphics::graphics() {
 		std::cout << "Unable to init SDL_image: " << IMG_GetError() << std::endl;
 	}
     
-    SDL_CreateWindowAndRenderer(SCREEN_WIDTH, BOARD_HEIGHT + UI_HEIGHT, 0, &window, &renderer);
+    SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
     SDL_SetWindowTitle(window, "Risk");
 
     boardImg = new image(renderer, "/home/david10238/Desktop/riskImages/board.png");
@@ -50,6 +52,19 @@ void graphics::drawTerritory(territory t){
     SDL_RenderFillRect(renderer, &rect);
 }
 
+void graphics::fillRect(SDL_Rect *rect, int r, int g, int b, int a){
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    SDL_RenderFillRect(renderer, rect);
+}
+
 void graphics::render(){
     SDL_RenderPresent(this->renderer);
+}
+
+const int graphics::getHeight() const{
+    return SCREEN_HEIGHT;
+}
+
+const int graphics::getWidth() const{
+    return SCREEN_WIDTH;
 }
