@@ -5,6 +5,7 @@ add_executable(risk
     main.cpp
     src/graphics.cpp
     src/image.cpp
+    src/board.cpp
 )
 
 target_link_libraries(risk SDL2main SDL2 SDL2_image)

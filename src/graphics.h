@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "image.h"
+#include "board.h"
 
 class graphics {
 private:
@@ -16,6 +17,7 @@ public:
     graphics();
     ~graphics();
     void drawBackground();
+    void drawTerritory(territory t);
     void clear();
     void render();
 };

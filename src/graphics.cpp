@@ -2,9 +2,9 @@
 #include <iostream>
 #include "graphics.h"
 
-constexpr int SCREEN_WIDTH = 1000;
-constexpr int BOARD_HEIGHT = 600;
-constexpr int UI_HEIGHT = 200;
+constexpr int SCREEN_WIDTH = 1200;
+constexpr int BOARD_HEIGHT = 650;
+constexpr int UI_HEIGHT = 250;
 
 graphics::graphics() {
     SDL_Init(SDL_INIT_VIDEO);
@@ -38,6 +38,16 @@ void graphics::clear(){
 
 void graphics::drawBackground(){
     this->boardImg->draw();
+}
+
+void graphics::drawTerritory(territory t){
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_Rect rect;
+    rect.x = t.x,
+    rect.y = t.y;
+    rect.h = 20;
+    rect.w = 20;
+    SDL_RenderFillRect(renderer, &rect);
 }
 
 void graphics::render(){
